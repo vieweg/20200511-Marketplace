@@ -89,7 +89,7 @@ describe('Cart Context', () => {
       </CartProvider>,
     );
 
-    act(() => {
+    await act(async () => {
       fireEvent.press(getByTestId('add-to-cart'));
     });
 
@@ -104,11 +104,11 @@ describe('Cart Context', () => {
       </CartProvider>,
     );
 
-    act(() => {
+    await act(async () => {
       fireEvent.press(getByTestId('add-to-cart'));
     });
 
-    act(() => {
+    await act(async () => {
       fireEvent.press(getByTestId('increment'));
     });
 
@@ -122,15 +122,15 @@ describe('Cart Context', () => {
       </CartProvider>,
     );
 
-    act(() => {
+    await act(async () => {
       fireEvent.press(getByTestId('add-to-cart'));
     });
 
-    act(() => {
+    await act(async () => {
       fireEvent.press(getByTestId('increment'));
     });
 
-    act(() => {
+    await act(async () => {
       fireEvent.press(getByTestId('decrement'));
     });
 
@@ -174,7 +174,11 @@ describe('Cart Context', () => {
 
     await act(async () => {
       fireEvent.press(getByTestId('add-to-cart'));
+    });
+    await act(async () => {
       fireEvent.press(getByTestId('increment'));
+    });
+    await act(async () => {
       fireEvent.press(getByTestId('decrement'));
     });
 
