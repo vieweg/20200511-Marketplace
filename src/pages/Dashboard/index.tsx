@@ -41,9 +41,9 @@ const Dashboard: React.FC = () => {
     loadProducts();
   }, []);
 
-  const handleAddToCart = useCallback(
-    (item: Product): void => {
-      addToCart(item);
+  const handleAddCart = useCallback(
+    async item => {
+      await addToCart(item);
     },
     [addToCart],
   );
@@ -58,7 +58,7 @@ const Dashboard: React.FC = () => {
             <ProductPrice>{formatValue(item.price)}</ProductPrice>
             <ProductButton
               testID={`add-to-cart-${item.id}`}
-              onPress={() => handleAddToCart(item)}
+              onPress={() => handleAddCart(item)}
             >
               <FeatherIcon size={20} name="plus" color="#C4C4C4" />
             </ProductButton>
@@ -66,7 +66,7 @@ const Dashboard: React.FC = () => {
         </Product>
       );
     },
-    [handleAddToCart],
+    [addToCart],
   );
 
   return (

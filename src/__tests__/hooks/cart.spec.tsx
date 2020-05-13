@@ -89,7 +89,7 @@ describe('Cart Context', () => {
       </CartProvider>,
     );
 
-    await act(async () => {
+    act(() => {
       fireEvent.press(getByTestId('add-to-cart'));
     });
 
@@ -104,11 +104,11 @@ describe('Cart Context', () => {
       </CartProvider>,
     );
 
-    await act(async () => {
+    act(() => {
       fireEvent.press(getByTestId('add-to-cart'));
     });
 
-    await act(async () => {
+    act(() => {
       fireEvent.press(getByTestId('increment'));
     });
 
@@ -122,15 +122,15 @@ describe('Cart Context', () => {
       </CartProvider>,
     );
 
-    await act(async () => {
+    act(() => {
       fireEvent.press(getByTestId('add-to-cart'));
     });
 
-    await act(async () => {
+    act(() => {
       fireEvent.press(getByTestId('increment'));
     });
 
-    await act(async () => {
+    act(() => {
       fireEvent.press(getByTestId('decrement'));
     });
 
@@ -181,6 +181,11 @@ describe('Cart Context', () => {
     await act(async () => {
       fireEvent.press(getByTestId('decrement'));
     });
+    /* await act(async () => {
+      fireEvent.press(getByTestId('add-to-cart'));
+      fireEvent.press(getByTestId('increment'));
+      fireEvent.press(getByTestId('decrement'));
+    }); */
 
     expect(mockedAsyncStorage.setItem).toHaveBeenCalledTimes(3);
   });

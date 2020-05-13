@@ -38,14 +38,6 @@ interface Product {
 const Cart: React.FC = () => {
   const { increment, decrement, products } = useCart();
 
-  const handleIncrement = useCallback((id: string) => increment(id), [
-    increment,
-  ]);
-
-  const handleDecrement = useCallback((id: string) => decrement(id), [
-    decrement,
-  ]);
-
   const cartTotal = useMemo(() => {
     const cartTotalValue = products.reduce((total, product) => {
       return product.price * product.quantity + total;
@@ -61,43 +53,17 @@ const Cart: React.FC = () => {
     return totalItems;
   }, [products]);
 
-  const renderItem = useCallback(
-    item => {
-      return (
-        <Product>
-          <ProductImage source={{ uri: item.image_url }} />
-          <ProductTitleContainer>
-            <ProductTitle>{item.title}</ProductTitle>
-            <ProductPriceContainer>
-              <ProductSinglePrice>{formatValue(item.price)}</ProductSinglePrice>
-
-              <TotalContainer>
-                <ProductQuantity>{`${item.quantity}x`}</ProductQuantity>
-
-                <ProductPrice>
-                  {formatValue(item.price * item.quantity)}
-                </ProductPrice>
-              </TotalContainer>
-            </ProductPriceContainer>
-          </ProductTitleContainer>
-          <ActionContainer>
-            <ActionButton
-              testID={`increment-${item.id}`}
-              onPress={() => handleIncrement(item.id)}
-            >
-              <FeatherIcon name="plus" color="#E83F5B" size={16} />
-            </ActionButton>
-            <ActionButton
-              testID={`decrement-${item.id}`}
-              onPress={() => handleDecrement(item.id)}
-            >
-              <FeatherIcon name="minus" color="#E83F5B" size={16} />
-            </ActionButton>
-          </ActionContainer>
-        </Product>
-      );
+  const handleIncrement = useCallback(
+    async id => {
+      await increment(id);
     },
-    [handleDecrement, handleIncrement],
+    [increment],
+  );
+  const handleDecrement = useCallback(
+    async id => {
+      await decrement(id);
+    },
+    [decrement],
   );
 
   return (
@@ -110,7 +76,41 @@ const Cart: React.FC = () => {
           ListFooterComponentStyle={{
             height: 80,
           }}
-          renderItem={({ item }) => renderItem(item)}
+          renderItem={({ item }) => (
+            <Product>
+              <ProductImage source={{ uri: item.image_url }} />
+              <ProductTitleContainer>
+                <ProductTitle>{item.title}</ProductTitle>
+                <ProductPriceContainer>
+                  <ProductSinglePrice>
+                    {formatValue(item.price)}
+                  </ProductSinglePrice>
+
+                  <TotalContainer>
+                    <ProductQuantity>{`${item.quantity}x`}</ProductQuantity>
+
+                    <ProductPrice>
+                      {formatValue(item.price * item.quantity)}
+                    </ProductPrice>
+                  </TotalContainer>
+                </ProductPriceContainer>
+              </ProductTitleContainer>
+              <ActionContainer>
+                <ActionButton
+                  testID={`increment-${item.id}`}
+                  onPress={() => handleIncrement(item.id)}
+                >
+                  <FeatherIcon name="plus" color="#E83F5B" size={16} />
+                </ActionButton>
+                <ActionButton
+                  testID={`decrement-${item.id}`}
+                  onPress={() => handleDecrement(item.id)}
+                >
+                  <FeatherIcon name="minus" color="#E83F5B" size={16} />
+                </ActionButton>
+              </ActionContainer>
+            </Product>
+          )}
         />
       </ProductContainer>
       <TotalProductsContainer>
